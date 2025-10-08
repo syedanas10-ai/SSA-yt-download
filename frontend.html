@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOWNLOAD YT VIDEOS FREE</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-2xl bg-gray-800 rounded-2xl shadow-xl p-8 space-y-6">
+    <h1 class="text-3xl font-bold text-center">DOWNLOAD YT VIDEOS FREE</h1>
+    <p class="text-center text-gray-400">Paste a YouTube video link below to download</p>
+
+    <input id="ytLink" type="text" placeholder="Enter YouTube URL" class="w-full p-3 rounded-xl text-black">
+
+    <button onclick="getDownloadLinks()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">Get Download Links</button>
+
+    <div id="results" class="space-y-3"></div>
+
+    <p class="text-xs text-gray-500 text-center mt-6">Disclaimer: This tool is for educational and personal use only. Downloading copyrighted content without permission is prohibited.</p>
+  </div>
+
+  <script>
+    async function getDownloadLinks() {
+      const link = document.getElementById("ytLink").value;
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = '<p class="text-center text-gray-400">Fetching formats...</p>';
+
+      try {
+        const response = await axios.post("https://your-backend-api.com/download", { url: link });
+        const formats = response.data.formats;
+
+        resultsDiv.innerHTML = formats.map(f => `
+          <div class="bg-gray-700 p-3 rounded-xl flex justify-between items-center">
+            <span>${f.quality} (${f.type})</span>
+            <a href="${f.url}" target="_blank" class="text-blue-400 hover:underline">Download</a>
+          </div>
+        `).join("");
+      } catch (err) {
+        resultsDiv.innerHTML = '<p class="text-center text-red-400">Failed to fetch download links. Make sure the URL is valid.</p>';
+      }
+    }
+  </script>
+</body>
+</html>
