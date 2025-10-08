@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SA YT Download</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    input {
+      width: 60%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-left: 10px;
+    }
+    #result {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>SA YT Download</h1>
+  <input id="urlInput" placeholder="Paste YouTube URL here">
+  <button id="downloadBtn">Get Download Link</button>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", async () => {
+      const url = document.getElementById("urlInput").value;
+      const resultDiv = document.getElementById("result");
+      resultDiv.textContent = "Fetching...";
+      try {
+        const response = await fetch(https://ssa-yt-download.onrender.com, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url })
+        });
+        const data = await response.json();
+        if (data.downloadUrl) {
+          resultDiv.innerHTML = `<a href="${data.downloadUrl}" target="_blank">🎧 Click here to download</a>`;
+        } else {
+          resultDiv.textContent = "❌ Failed to fetch download link.";
+        }
+      } catch (err) {
+        resultDiv.textContent = "❌ Error: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
